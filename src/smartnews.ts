@@ -5,7 +5,6 @@ import { Item, Author } from "./typings";
 
 export default (ins: Feed) => {
   const { options } = ins;
-  let isAtom = false;
   let isContent = false;
 
   const base: any = {
@@ -18,7 +17,8 @@ export default (ins: Feed) => {
         description: { _text: options.description },
         lastBuildDate: { _text: options.updated ? options.updated.toUTCString() : new Date().toUTCString() },
         docs: { _text: options.docs ? options.docs : "https://validator.w3.org/feed/docs/rss2.html" },
-        generator: { _text: options.generator || generator }
+        generator: { _text: options.generator || generator },
+        'sf:logo': { url: options.sfLogo }
       }
     }
   };
@@ -63,41 +63,6 @@ export default (ins: Feed) => {
   });
 
   /**
-   * Feed URL
-   * http://validator.w3.org/feed/docs/warning/MissingAtomSelfLink.html
-   */
-  const atomLink = options.feed || (options.feedLinks && options.feedLinks.atom);
-  if (atomLink) {
-    isAtom = true;
-    base.rss.channel["atom:link"] = [
-      {
-        _attributes: {
-          href: atomLink,
-          rel: "self",
-          type: "application/rss+xml"
-        }
-      }
-    ];
-  }
-
-  /**
-   * Hub for PubSubHubbub
-   * https://code.google.com/p/pubsubhubbub/
-   */
-  if (options.hub) {
-    isAtom = true;
-    if (!base.rss.channel["atom:link"]) {
-      base.rss.channel["atom:link"] = [];
-    }
-    base.rss.channel["atom:link"] = {
-      _attributes: {
-        href: options.hub,
-        rel: "hub"
-      }
-    };
-  }
-
-  /**
    * Channel Categories
    * https://validator.w3.org/feed/docs/rss2.html#hrelementsOfLtitemgt
    */
@@ -112,6 +77,10 @@ export default (ins: Feed) => {
 
     if (entry.link) {
       item.link = { _text: entry.link };
+    }
+
+    if (entry.analytics) {
+      item["snf:analytics"] = { _cdata: entry.analytics }
     }
 
     if (entry.guid) {
@@ -160,8 +129,7 @@ export default (ins: Feed) => {
     base.rss._attributes["xmlns:content"] = "http://purl.org/rss/1.0/modules/content/";
   }
 
-  if (isAtom) {
-    base.rss._attributes["xmlns:atom"] = "http://www.w3.org/2005/Atom";
-  }
+  base.rss._attributes["xmlns:snf"] = "http://www.smartnews.be/snf";
+
   return convert.js2xml(base, { compact: true, ignoreComment: true, spaces: 4 });
 };

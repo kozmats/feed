@@ -11,6 +11,10 @@ export interface Item {
 
   image?: string;
 
+  type?: string;
+
+  analytics?: string;
+
   author?: Author[];
   contributor?: Author[];
 
@@ -29,6 +33,7 @@ export interface Author {
 export interface FeedOptions {
   id: string;
   title: string;
+  sfLogo?: string;
   updated?: Date;
   generator?: string;
   language?: string;

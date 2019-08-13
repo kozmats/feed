@@ -1,6 +1,7 @@
 import renderAtom from "./atom1";
 import renderJSON from "./json";
 import renderRSS from "./rss2";
+import renderSmartNews from "./smartnews";
 import { FeedOptions, Item, Author, Extension } from "./typings";
 
 export class Feed {
@@ -36,4 +37,9 @@ export class Feed {
    * Returns a JSON1 feed
    */
   public json1 = (): string => renderJSON(this);
+
+  /**
+   * Returns a SmartNews feed
+   */
+  public smartnews = (): string => renderSmartNews(this)
 }

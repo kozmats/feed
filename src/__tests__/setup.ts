@@ -6,6 +6,7 @@ const published = new Date("Sat, 10 Jul 2013 23:00:00 GMT");
 export const sampleFeed = new Feed({
   title: "Feed Title",
   description: "This is my personnal feed!",
+  sfLogo: "http://exsample.com/logo.jpg",
   link: "http://example.com/",
   id: "http://example.com/",
   feed: "http://example.com/sampleFeed.rss",
@@ -35,6 +36,7 @@ sampleFeed.addItem({
   link: "https://example.com/hello-world",
   description: "This is an article about Hello World.",
   content: "Content of my item",
+  analytics: "<script><!-- Analytics code --></script>",
   author: [
     {
       name: "Jane Doe",
@@ -77,6 +79,7 @@ sampleFeed.addItem({
   ],
   date: updated,
   image: "https://example.com/hello-world.jpg",
+  type: "image/jpeg",
   published
 });
 
