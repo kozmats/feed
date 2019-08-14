@@ -15,6 +15,10 @@ export interface Item {
 
   analytics?: string;
 
+  creator?: string;
+
+  status?: boolean;
+
   author?: Author[];
   contributor?: Author[];
 

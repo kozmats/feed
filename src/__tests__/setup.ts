@@ -37,6 +37,8 @@ sampleFeed.addItem({
   description: "This is an article about Hello World.",
   content: "Content of my item",
   analytics: "<script><!-- Analytics code --></script>",
+  status: true,
+  creator: "Jane Doe",
   author: [
     {
       name: "Jane Doe",

@@ -79,10 +79,6 @@ export default (ins: Feed) => {
       item.link = { _text: entry.link };
     }
 
-    if (entry.analytics) {
-      item["snf:analytics"] = { _cdata: entry.analytics }
-    }
-
     if (entry.guid) {
       item.guid = { _text: entry.guid };
     } else if (entry.link) {
@@ -101,25 +97,23 @@ export default (ins: Feed) => {
       isContent = true;
       item["content:encoded"] = { _cdata: entry.content };
     }
-    /**
-     * Item Author
-     * https://validator.w3.org/feed/docs/rss2.html#ltauthorgtSubelementOfLtitemgt
-     */
-    if (Array.isArray(entry.author)) {
-      item.author = [];
-      entry.author.map((author: Author) => {
-        if (author.email && author.name) {
-          item.author.push({ _text: author.email + " (" + author.name + ")" });
-        }
-      });
+
+    if (entry.creator) {
+      item["dc:creator"] = { _text: entry.creator }
     }
 
     if (entry.image) {
-      if (entry.type) {
-        item.enclosure = { _attributes: { url: entry.image, type: entry.type } };
-      } else {
-        item.enclosure = { _attributes: { url: entry.image } };
-      }
+      item["media:thumbnail"] = { _attributes: { url: entry.image } }
+    }
+
+    if (entry.status != null) {
+      item["media:status"] = { _text: entry.status ? "active" : "deleted" }
+    } else {
+      item["media:status"] = { _text: "active" }
+    }
+
+    if (entry.analytics) {
+      item["snf:analytics"] = { _cdata: entry.analytics }
     }
 
     base.rss.channel.item.push(item);
@@ -129,6 +123,8 @@ export default (ins: Feed) => {
     base.rss._attributes["xmlns:content"] = "http://purl.org/rss/1.0/modules/content/";
   }
 
+  base.rss._attributes["xmlns:dc"] = "http://purl.org/dc/elements/1.1/";
+  base.rss._attributes["xmlns:media"] = "http://search.yahoo.com/mrss/";
   base.rss._attributes["xmlns:snf"] = "http://www.smartnews.be/snf";
 
   return convert.js2xml(base, { compact: true, ignoreComment: true, spaces: 4 });
