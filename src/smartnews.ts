@@ -18,7 +18,7 @@ export default (ins: Feed) => {
         lastBuildDate: { _text: options.updated ? options.updated.toUTCString() : new Date().toUTCString() },
         docs: { _text: options.docs ? options.docs : "https://validator.w3.org/feed/docs/rss2.html" },
         generator: { _text: options.generator || generator },
-        'sf:logo': { url: options.sfLogo }
+        'snf:logo': { url: options.sfLogo }
       }
     }
   };

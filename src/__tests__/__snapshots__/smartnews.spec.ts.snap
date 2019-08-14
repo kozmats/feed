@@ -10,9 +10,9 @@ exports[`smartnews should generate a valid feed 1`] = `
         <lastBuildDate>Sat, 13 Jul 2013 23:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
-        <sf:logo>
+        <snf:logo>
             <url>http://exsample.com/logo.jpg</url>
-        </sf:logo>
+        </snf:logo>
         <language>en</language>
         <image>
             <title>Feed Title</title>
