@@ -17,6 +17,10 @@ export class Feed {
 
   public addItem = (item: Item) => this.items.push(item);
 
+  public sortItems = () => this.items.sort(function(a: Item, b: Item) {
+    return (a.date < b.date ? 1 : -1);
+  });
+
   public addCategory = (category: string) => this.categories.push(category);
 
   public addContributor = (contributor: Author) => this.contributors.push(contributor);

@@ -85,6 +85,8 @@ sampleFeed.addItem({
   published
 });
 
+sampleFeed.sortItems();
+
 sampleFeed.addExtension({
   name: "_example_extension",
   objects: {
